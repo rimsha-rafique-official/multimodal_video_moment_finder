@@ -1,111 +1,36 @@
-# 🎬 Multimodal Video Moment Finder
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-<p align="center">
-  <img src="assets/hero_banner.png" alt="Multimodal Video Moment Finder" width="700">
-</p>
+## Getting Started
 
-Find any moment in a video using images or text. Drop a screenshot to find where it appears, or describe a scene in words. Pure visual matching, zero transcription.
-
-Powered by **Gemini Embedding 2** for native cross-modal search.
-
-## How It Works
-
-1. **Upload a video** — frames are extracted at 1fps using ffmpeg
-2. **Each frame is embedded** natively with `gemini-embedding-2-preview`
-3. **Search by image** — embed your photo, cosine similarity against all frames
-4. **Search by text** — embed your description, cross-modal match against frames
-5. **Jump to the moment** — click any result to play the video at that timestamp
-
-No transcription. No captions. No OCR. The embedding model understands visual content directly.
-
-## Stack
-
-- **Backend**: FastAPI + Gemini Embedding 2 + ChromaDB
-- **Frontend**: Next.js (dark theme, split panel)
-- **Frame extraction**: ffmpeg (1fps)
-- **Frame descriptions**: Gemini 3 Flash
-- **Models**: `gemini-embedding-2-preview` (embeddings), `gemini-3-flash-preview` (descriptions)
-
-## Project Structure
-
-```
-advanced_llm_apps/multimodal_video_moment_finder/
-├── backend/
-│   ├── server.py           # FastAPI server with upload, search & video management endpoints
-│   ├── video_store.py      # Video processing, frame extraction, embedding & ChromaDB storage
-│   └── requirements.txt    # Python dependencies
-├── frontend/
-│   ├── app/
-│   │   ├── page.tsx        # Main UI — video upload, image/text search, result playback
-│   │   ├── layout.tsx      # Root layout
-│   │   └── globals.css     # Global styles
-│   ├── package.json
-│   ├── next.config.ts
-│   └── tsconfig.json
-└── README.md
-```
-
-## Setup
-
-### Prerequisites
-
-- Python 3.10+
-- Node.js 18+
-- ffmpeg installed (`brew install ffmpeg` or `apt install ffmpeg`)
-- [Google AI API key](https://aistudio.google.com/apikey)
-
-### Backend
+First, run the development server:
 
 ```bash
-cd advanced_llm_apps/multimodal_video_moment_finder/backend
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-export GOOGLE_API_KEY="your-api-key"
-python server.py
-```
-
-Backend runs on `http://localhost:8890`.
-
-### Frontend
-
-```bash
-cd advanced_llm_apps/multimodal_video_moment_finder/frontend
-npm install
-echo 'NEXT_PUBLIC_API_URL=http://localhost:8890' > .env.local
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Frontend runs on `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Usage
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-1. Open `http://localhost:3000`
-2. Upload a video (any format ffmpeg supports)
-3. Wait for frame extraction and embedding (1 frame/second)
-4. Search:
-   - **Image**: drop a screenshot or photo to find where it appears
-   - **Text**: describe a scene ("person on stage", "aerial view of city")
-5. Click any result to jump the video to that moment
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## API Endpoints
+## Learn More
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/upload-video` | Upload and index a video |
-| POST | `/find-moment` | Search by image (multipart form) |
-| POST | `/find-moment-text` | Search by text description |
-| GET | `/videos` | List indexed videos |
-| DELETE | `/videos/{id}` | Remove a video |
-| GET | `/health` | Status check |
+To learn more about Next.js, take a look at the following resources:
 
-## Architecture
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-<p align="center">
-  <img src="assets/architecture_diagram.png" alt="Architecture Diagram" width="600">
-</p>
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Key Insight
+## Deploy on Vercel
 
-Gemini Embedding 2 embeds images and text into the same vector space natively. This means you can search for a visual moment using either another image or a text description, without any intermediate captioning or transcription step. The model understands what's in the frame directly.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
